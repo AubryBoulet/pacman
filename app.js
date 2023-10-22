@@ -2,12 +2,17 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const scoreSP = document.querySelector("#score");
 let map = []
-let player; let blinky; let pinky; let clyde; let inky;
+let player; 
+const ghosts = {
+    blinky: null,
+    pinky: null,
+    clyde: null,
+    inky: null
+}
 let gameStep = 0;
 let lastKey = "";
-let rndPlayerX = 0;
-let rndPlayerY = 0;
 let score = 0;
+let mapPellets = 0;
 canvas.width = innerWidth-100;
 canvas.height = innerHeight-100;
 

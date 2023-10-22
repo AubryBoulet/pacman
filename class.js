@@ -14,6 +14,7 @@ class sprite {
         this.radiant = 0.75;
         this.animationSpeed = 0.1;
         this.animationOrientation = 0;
+        this.pellets = 0;
     }
     draw() {
         c.fillStyle = this.color;
@@ -51,11 +52,13 @@ class ghost {
     constructor({position, velocity, color, path}) {
         this.position = position;
         this.velocity = velocity;
+        this.speed = 4
         this.path = path;
         this.radius = 15;
         this.color = color;
         this.lastDirection = "";
-        this.pathIndex = 0
+        this.pathIndex = 0;
+        this.status = 0;
     }
     draw() {
         c.fillStyle = this.color;
@@ -71,23 +74,23 @@ class ghost {
             if (this.pathIndex == this.path.length ) requestNewPath(this)
             switch(this.path[this.pathIndex]){
                 case "up":
-                    this.velocity.y = -4;
+                    this.velocity.y = -this.speed;
                     this.velocity.x = 0;
                     this.lastDirection = "up"
                     break;
                 case "down":
-                    this.velocity.y = 4;
+                    this.velocity.y = this.speed;
                     this.velocity.x = 0;
                     this.lastDirection = "down"
                     break;
                 case "left":
                     this.velocity.y = 0;
-                    this.velocity.x = -4;
+                    this.velocity.x = -this.speed;
                     this.lastDirection = "left"
                     break;
                 case "right":
                     this.velocity.y = 0;
-                    this.velocity.x = 4;
+                    this.velocity.x = this.speed;
                     this.lastDirection = "right"
                     break;
             }
