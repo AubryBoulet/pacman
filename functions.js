@@ -1,3 +1,10 @@
+function initGame(){
+    gameStep = 0;
+    score = 0;
+    scoreSP.textContent = score;
+    initMap();
+    initEntities();
+}
 function drawMap(){
     map.forEach((row, i) => {
         row.forEach((symbol, j) =>{
@@ -267,8 +274,9 @@ function requestNewPath(object){
 function checkColision(){
     if (Math.hypot(blinky.position.x - player.position.x, blinky.position.y - player.position.y) < blinky.radius + player.radius
     || Math.hypot(pinky.position.x - player.position.x, pinky.position.y - player.position.y) < pinky.radius + player.radius
-    || Math.hypot(clyde.position.x - player.position.x, clyde.position.y - player.position.y) < clyde.radius + player.radius) {
-        console.log("blinky colide")
+    || Math.hypot(clyde.position.x - player.position.x, clyde.position.y - player.position.y) < clyde.radius + player.radius
+    || Math.hypot(inky.position.x - player.position.x, inky.position.y - player.position.y) < inky.radius + player.radius) {
+        gameStep = 2;
     }
 }
 
@@ -279,24 +287,47 @@ function animate(){
     c.fillRect(0,0,canvas.width,canvas.height);
     //draw the map
     drawMap();
-    //check if player can move
-    checkDirection(player,lastKey)
-    //check for colision between player and ghost
-    checkColision()
-    //update player position and draw
-    player.update();
-    //update blinky poristion and draw
-    blinky.update();
-    //update pinky poristion and draw
-    pinky.update();
-    //update clyde poristion and draw
-    clyde.update();
-    //update inky poristion and draw
-    inky.update();
-    //Check pellets colision
-    rndPlayerY = Math.round((player.position.y-Boundary.height)/40)
-    rndPlayerX = Math.round((player.position.x-Boundary.width)/40)
-    if(map[rndPlayerY][rndPlayerX]==="."){
-        map[rndPlayerY][rndPlayerX]=" "
+
+    switch (gameStep){
+        case 0: //game is waiting to start
+            //Display player & ghost and wait for game start
+            player.draw()
+            blinky.draw()
+            pinky.draw()
+            clyde.draw()
+            inky.draw()
+            break;
+        case 1: //game is playing
+            //check if player can move
+            checkDirection(player,lastKey)
+            //check for colision between player and ghost
+            checkColision()
+            //update player position and draw
+            player.update();
+            //update blinky poristion and draw
+            blinky.update();
+            //update pinky poristion and draw
+            pinky.update();
+            //update clyde poristion and draw
+            clyde.update();
+            //update inky poristion and draw
+            inky.update();
+            //Check pellets colision
+            rndPlayerY = Math.round((player.position.y-Boundary.height)/40)
+            rndPlayerX = Math.round((player.position.x-Boundary.width)/40)
+            if(map[rndPlayerY][rndPlayerX]==="."){
+                map[rndPlayerY][rndPlayerX]=" ";
+                score +=10;
+            }
+            scoreSP.textContent = score
+            break;
+        case 2: //game over !
+            //Display player & ghost and wait for game start
+            player.draw()
+            blinky.draw()
+            pinky.draw()
+            clyde.draw()
+            inky.draw()
+            break;
     }
 }

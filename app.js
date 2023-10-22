@@ -1,18 +1,22 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-let lastKey = ""
-let rndPlayerX = 0
-let rndPlayerY = 0
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-canvas.style.overflow = "hidden";
+const scoreSP = document.querySelector("#score");
+let map = []
+let player; let blinky; let pinky; let clyde; let inky;
+let gameStep = 0;
+let lastKey = "";
+let rndPlayerX = 0;
+let rndPlayerY = 0;
+let score = 0;
+canvas.width = innerWidth-100;
+canvas.height = innerHeight-100;
 
-
-
+initGame();
 animate();
 
 
 addEventListener('keydown', (event)=>{
+    if (gameStep == 0 || gameStep == 2) gameStep++; if (gameStep == 3) initGame();
     switch(event.key){
         case "ArrowRight":
             lastKey = "right";
