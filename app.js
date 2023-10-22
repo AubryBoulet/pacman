@@ -16,7 +16,8 @@ let lastKey = "";
 let score = 0;
 let mapPellets = 0;
 canvas.width = innerWidth-100;
-canvas.height = innerHeight-100;
+canvas.height = 1100;
+console.log(canvas.height)
 
 initGame();
 animate();
