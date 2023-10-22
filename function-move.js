@@ -1,4 +1,5 @@
-//deplacement related functions
+//Fonctions lié au déplacement
+//Gestion du déplacement du joueur
 function checkDirection(object,desiredDirection){
     if((object.position.y -Boundary.height/2)%Boundary.height || (object.position.x - Boundary.width/2)%Boundary.width){
         return true;
@@ -66,7 +67,7 @@ function canMove(x,y){
     if(map[y][x] == "_") return false
     return true
 }
-
+//Génération du chemain des fantomes pour rejoindre leur destination (jusqu'au prochain carrefour)
 function nextMove(object,targetX,targetY,step = 4){
     let X = (object.position.x - Boundary.width/2)/40;
     let Y = (object.position.y - Boundary.height/2)/40;
@@ -206,6 +207,7 @@ function pushNextMove(object,X,Y,move){
     }    
     return nextPosition;
 }
+//destination cible des fantomes
 function requestNewPath(object){
     switch(object.status){
         case 0: //en chasse
@@ -222,16 +224,16 @@ function requestNewPath(object){
                 }else{
                     switch(player.lastDirection){
                         case "left":
-                            makePath(object,40,player.position.y);
+                            makePath(object,Boundary.width,player.position.y);
                             break;
                         case "right":
-                            makePath(object,760,player.position.y);
+                            makePath(object,mapWidht,player.position.y);
                             break;
                         case "up":
-                            makePath(object,player.position.x,40);
+                            makePath(object,player.position.x,Boundary.height);
                             break;
                         case "down":
-                            makePath(object,player.position.x,1040);
+                            makePath(object,player.position.x,mapHeight);
                             break
                         default:
                             makePath(object,player.position.x,player.position.y);
@@ -241,16 +243,44 @@ function requestNewPath(object){
             if (object == ghosts.clyde){
                 object.path = [];
                 object.pathIndex = 0;
-                let rndx = Math.random() *(760-40)+40
-                let rndy = Math.random()*(1040-40)+40
+                let rndx = Math.random() *(mapWidht-Boundary.width)+Boundary.width
+                let rndy = Math.random()*(mapHeight-Boundary.height)+Boundary.height
                 makePath(object,rndx,rndy)
             }
         break;
     case 1: //Chassé
-
+            if (object.position.y < player.position.y && object.position.y > Boundary.height+Boundary.height/2 || object.position.y == mapHeight){
+                if (object.position.x < player.position.x){
+                    makePath(object,Boundary.width,Boundary.height)
+                }else{
+                    makePath(object,mapWidht,Boundary.height)
+                }
+            }else{
+                if (object.position.x < player.position.x){
+                    makePath(object,Boundary.width,mapHeight)
+                }else{
+                    makePath(object,mapWidht,mapHeight)
+                }
+            }
             break;
     case 2: //Mort (retour à la base)
-
+            if (object.position.x == 400+Boundary.width/2 && object.position.y == 400+Boundary.height/2){
+                switch(object){
+                    case ghosts.blinky:
+                        ghosts.blinky = initBlinky();
+                        break;
+                    case ghosts.clyde:
+                        ghosts.clyde = initClyde();
+                        break;
+                    case ghosts.inky:
+                        ghosts.inky = initInky();
+                        break;
+                    case ghosts.pinky:
+                        ghosts.pinky = initPinky();
+                        break;
+                }
+            }
+            makePath(object,400+Boundary.width/2,400+Boundary.height/2)
             break;
     }
 }

@@ -4,7 +4,7 @@ class Boundary{
 }
 
 
-class sprite {
+class sprite { //Classe lié au joueur
     constructor({position, velocity, color}) {
         this.position = position;
         this.velocity = velocity;
@@ -48,7 +48,7 @@ class sprite {
     }
 }
 
-class ghost {
+class ghost { //Classe lié aux fantomes
     constructor({position, velocity, color, path}) {
         this.position = position;
         this.velocity = velocity;
@@ -58,10 +58,12 @@ class ghost {
         this.color = color;
         this.lastDirection = "";
         this.pathIndex = 0;
-        this.status = 0;
+        this.status = -1;
+        this.timeout = 0;
     }
     draw() {
         c.fillStyle = this.color;
+        if (this.status == 1)c.fillStyle = "blueviolet"; if (this.status == 2)c.fillStyle = "grey";
         c.beginPath();
         c.arc(this.position.x,this.position.y, this.radius, 0, Math.PI*2,false);
         c.fill();
@@ -71,7 +73,10 @@ class ghost {
     update(){
         if ((this.position.x - Boundary.width/2) % 40 == 0 && (this.position.y - Boundary.height/2) % 40 == 0 ){
             if (this.velocity.x || this.velocity.y) this.pathIndex++
-            if (this.pathIndex == this.path.length ) requestNewPath(this)
+            if (this.pathIndex == this.path.length ){
+                if (this.status == -1) this.status = 0
+                 requestNewPath(this)
+            }
             switch(this.path[this.pathIndex]){
                 case "up":
                     this.velocity.y = -this.speed;

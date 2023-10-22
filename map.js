@@ -34,4 +34,6 @@ function initMap(){
             if (j ==".") mapPellets ++;
         }
     }
+    mapWidht = (map[0].length-1)*Boundary.width-Boundary.width/2
+    mapHeight = (map.length-1)*Boundary.width-Boundary.width/2
 }

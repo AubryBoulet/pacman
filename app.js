@@ -9,6 +9,8 @@ const ghosts = {
     clyde: null,
     inky: null
 }
+let mapWidht = 0;
+let mapHeight = 0;
 let gameStep = 0;
 let lastKey = "";
 let score = 0;
