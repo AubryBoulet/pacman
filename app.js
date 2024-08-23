@@ -17,6 +17,7 @@ let score = 0;
 let mapPellets = 0;
 canvas.width = innerWidth-100;
 canvas.height = 1100;
+c.scale(0.5,0.5);
 console.log(canvas.height)
 
 initGame();
