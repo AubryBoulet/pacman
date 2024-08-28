@@ -27,7 +27,8 @@ if (scaleX < scaleY) {
 } else {
     scale = Math.round(scaleY * 10) / 10
 }
-c.scale(scaleY,scaleY)
+console.log(scale)
+c.scale(scale,scale)
 
 initGame();
 animate();
