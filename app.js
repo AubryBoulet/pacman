@@ -23,9 +23,9 @@ const scaleX = innerWidth / canvas.width
 const scaleY = innerHeight / canvas.height
 let scale = 0
 if (scaleX < scaleY) {
-    scale = Math.round(scaleX * 10) / 10
+    scale = Math.floor(scaleX * 10) / 10
 } else {
-    scale = Math.round(scaleY * 10) / 10
+    scale = Math.floor(scaleY * 10) / 10
 }
 console.log(scale)
 c.scale(scale,scale)
