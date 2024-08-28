@@ -18,11 +18,19 @@ let mapPellets = 0;
 document.querySelector("body").style.overflow = "hidden";
 canvas.width = innerWidth-100;
 canvas.height = 1100;
-c.scale(0.5,0.5);
+
 console.log(canvas.height)
 console.log(canvas.width)
 console.log(innerWidth)
 console.log(innerHeight)
+const scaleX = innerWidth / canvas.width
+const scaleY = innerHeight / canvas.height
+
+if (scaleX < scaleY) {
+    c.scale(scaleX,scaleX)
+} else {
+    c.scale(scaleY,scaleY)
+}
 
 initGame();
 animate();
