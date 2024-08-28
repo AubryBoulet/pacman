@@ -19,18 +19,15 @@ document.querySelector("body").style.overflow = "hidden";
 canvas.width = innerWidth-100;
 canvas.height = 1100;
 
-console.log(canvas.height)
-console.log(canvas.width)
-console.log(innerWidth)
-console.log(innerHeight)
 const scaleX = innerWidth / canvas.width
 const scaleY = innerHeight / canvas.height
-
+let scale = 0
 if (scaleX < scaleY) {
-    c.scale(scaleX,scaleX)
+    scale = Math.round(scaleX * 10) / 10
 } else {
-    c.scale(scaleY,scaleY)
+    scale = Math.round(scaleY * 10) / 10
 }
+c.scale(scaleY,scaleY)
 
 initGame();
 animate();
